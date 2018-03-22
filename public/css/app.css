@@ -8441,6 +8441,65 @@ textarea {
   text-align: right;
 }
 
+.input-title {
+  margin: 0;
+  line-height: 2.2;
+}
+
+.easy-checkbox {
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  padding: 0 20px 20px 0;
+  width: 50%;
+}
+
+.easy-checkbox .easy-checkbox-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #636b6f;
+  text-align: center;
+  line-height: 2;
+  border-radius: 5px;
+}
+
+.easy-checkbox .easy-checkbox-icon.radio {
+  border-radius: 50%;
+}
+
+.easy-checkbox .easy-checkbox-label {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  padding: 0 0 0 32px;
+  margin: 0 0 0 -24px;
+}
+
+.easy-checkbox input {
+  display: none !important;
+}
+
+.easy-checkbox span {
+  display: none;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.easy-checkbox.checked span {
+  display: block;
+}
+
+.easy-checkbox.disabled {
+  cursor: default;
+  opacity: 0.2;
+}
+
+.easy-checkbox:hover .easy-checkbox-icon {
+  background: #d3e0e9;
+}
+
 #welcome {
   width: 900px;
   margin: 0 auto;

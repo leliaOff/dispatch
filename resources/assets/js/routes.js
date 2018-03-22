@@ -2,6 +2,7 @@ import VueRouter from 'vue-router';
 
 let routes = [
     { path: '/', component: require('./components/Templates/Templates.vue') },
+    { path: '/send', component: require('./components/Send/Send.vue') },
 ];
 
 const router = new VueRouter({

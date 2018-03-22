@@ -978,8 +978,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainMenu__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_MainMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_MainMenu__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ConfirmModals__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_ConfirmModals___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_ConfirmModals__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Controls_ConfirmModals__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Controls_ConfirmModals___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Controls_ConfirmModals__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Controls_Checkbox__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Controls_Checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Controls_Checkbox__);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -999,7 +1001,10 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]);
 Vue.component('main-menu', __WEBPACK_IMPORTED_MODULE_3__components_MainMenu___default.a);
 
 
-Vue.component('confirm-modals', __WEBPACK_IMPORTED_MODULE_4__components_ConfirmModals___default.a);
+Vue.component('confirm-modals', __WEBPACK_IMPORTED_MODULE_4__components_Controls_ConfirmModals___default.a);
+
+
+Vue.component('easy-checkbox', __WEBPACK_IMPORTED_MODULE_5__components_Controls_Checkbox___default.a);
 
 var app = new Vue({
   el: '#app',
@@ -43205,7 +43210,7 @@ module.exports = function normalizeComponent (
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(54);
 
 
-var routes = [{ path: '/', component: __webpack_require__(70) }];
+var routes = [{ path: '/', component: __webpack_require__(70) }, { path: '/send', component: __webpack_require__(79) }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: routes
@@ -45937,6 +45942,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -45996,6 +46003,40 @@ var render = function() {
         { staticClass: "top-right links", attrs: { id: "main-menu" } },
         [
           _c("ul", { staticClass: "menu" }, [
+            _vm.user
+              ? _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-link",
+                        attrs: { to: "/", tag: "button" }
+                      },
+                      [_vm._v("Шаблоны")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user
+              ? _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-link",
+                        attrs: { to: "/send", tag: "button" }
+                      },
+                      [_vm._v("Рассылка")]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
             !_vm.user
               ? _c("li", [
                   _c(
@@ -47106,15 +47147,18 @@ if (false) {
 }
 
 /***/ }),
-/* 76 */
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(39)
 /* script */
-var __vue_script__ = __webpack_require__(77)
+var __vue_script__ = __webpack_require__(80)
 /* template */
-var __vue_template__ = __webpack_require__(78)
+var __vue_template__ = __webpack_require__(81)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47131,7 +47175,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\ConfirmModals.vue"
+Component.options.__file = "resources\\assets\\js\\components\\Send\\Send.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -47140,9 +47184,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-333a5d5f", Component.options)
+    hotAPI.createRecord("data-v-63d00fd6", Component.options)
   } else {
-    hotAPI.reload("data-v-333a5d5f", Component.options)
+    hotAPI.reload("data-v-63d00fd6", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47153,7 +47197,343 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 77 */
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    components: {
+        //singleTemplate: SingleTemplate,
+    },
+
+    data: function data() {
+        return {
+            template: {},
+            channels: [],
+            contact: '',
+            data: {},
+
+            /* Данный справочников */
+            templatesList: [],
+            channelsList: {}
+
+        };
+    },
+
+
+    methods: {
+
+        /* Получаем список всех шаблонов для пользователя */
+        getTemplates: function getTemplates() {
+            var _this = this;
+
+            axios.get(window.baseurl + 'templates').then(function (response) {
+                _this.templatesList = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+
+        /* Получаем список всех каналов */
+        getChannels: function getChannels() {
+            var _this2 = this;
+
+            axios.get(window.baseurl + 'channels').then(function (response) {
+                _this2.channelsList = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+
+        /* Изменили список каналов */
+        channelChange: function channelChange(name, state) {
+            if (state === true) {
+                if (!this.channels.includes(name)) {
+                    this.channels.push(name);
+                }
+            } else {
+                var i = this.channels.indexOf(name);
+                this.channels.splice(i, 1);
+            }
+        }
+    },
+
+    mounted: function mounted() {
+        this.getTemplates();
+        this.getChannels();
+    }
+});
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-body" }, [
+      _vm.templatesList.length == 0
+        ? _c(
+            "div",
+            { staticClass: "alert alert-warning" },
+            [
+              _vm._v(
+                "Для начала отправчки сообщений необходимо создать хотя бы один "
+              ),
+              _c("router-link", { attrs: { to: "/" } }, [_vm._v("шаблон")])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.templatesList.length > 0
+        ? _c("div", { staticClass: "row" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-8 clearfix" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.template,
+                        expression: "template"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.template = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.templatesList, function(template) {
+                    return _c(
+                      "option",
+                      { key: template.id, domProps: { value: template } },
+                      [_vm._v(_vm._s(template.title))]
+                    )
+                  })
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.template.text != undefined
+              ? _c("div", { staticClass: "col-sm-4 clearfix" }, [
+                  _c("label", { staticClass: "input-title" }, [
+                    _vm._v("Текст шаблона:")
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.template.text != undefined
+              ? _c("div", { staticClass: "col-sm-8 clearfix" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "textarea",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.template.text,
+                            expression: "template.text"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { readonly: "" },
+                        domProps: { value: _vm.template.text },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.template, "text", $event.target.value)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.template.text))]
+                    )
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.template.text != undefined
+              ? _c("div", { staticClass: "col-sm-4 clearfix" }, [
+                  _c("label", { staticClass: "input-title" }, [
+                    _vm._v("Каналы передачи:")
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.template.text != undefined
+              ? _c("div", { staticClass: "col-sm-8 clearfix" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    _vm._l(_vm.channelsList, function(channel) {
+                      return _c("easy-checkbox", {
+                        key: channel.id,
+                        attrs: { index: channel.name, label: channel.title },
+                        on: { change: _vm.channelChange }
+                      })
+                    })
+                  )
+                ])
+              : _vm._e()
+          ])
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-heading" }, [
+      _c("h1", [_vm._v("Отправка сообщения")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-4 clearfix" }, [
+      _c("label", { staticClass: "input-title" }, [_vm._v("Шаблон:")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-63d00fd6", module.exports)
+  }
+}
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(39)
+/* script */
+var __vue_script__ = __webpack_require__(83)
+/* template */
+var __vue_template__ = __webpack_require__(84)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Controls\\ConfirmModals.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23587092", Component.options)
+  } else {
+    hotAPI.reload("data-v-23587092", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47200,7 +47580,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 78 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47284,7 +47664,176 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-333a5d5f", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-23587092", module.exports)
+  }
+}
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(39)
+/* script */
+var __vue_script__ = __webpack_require__(86)
+/* template */
+var __vue_template__ = __webpack_require__(87)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Controls\\Checkbox.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4c352762", Component.options)
+  } else {
+    hotAPI.reload("data-v-4c352762", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    props: {
+        checked: Boolean,
+        index: [String, Number],
+        label: String
+    },
+
+    data: function data() {
+        return {
+            localChecked: this.checked
+        };
+    },
+
+
+    computed: {
+        isChecked: function isChecked() {
+            return this.localChecked;
+        }
+    },
+
+    methods: {
+        click: function click() {
+            this.localChecked = !this.localChecked;
+            this.$emit('change', this.index, this.localChecked);
+        }
+    }
+
+});
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "easy-checkbox",
+      class: { checked: _vm.isChecked },
+      on: { click: _vm.click }
+    },
+    [
+      _c("div", { staticClass: "easy-checkbox-icon" }, [
+        _c("span", { staticClass: "glyphicon glyphicon-ok" }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.isChecked,
+              expression: "isChecked"
+            }
+          ],
+          attrs: { type: "checkbox" },
+          domProps: {
+            checked: Array.isArray(_vm.isChecked)
+              ? _vm._i(_vm.isChecked, null) > -1
+              : _vm.isChecked
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.isChecked,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.isChecked = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.isChecked = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.isChecked = $$c
+              }
+            }
+          }
+        })
+      ]),
+      _c("div", { staticClass: "easy-checkbox-label" }, [
+        _vm._v("\n        " + _vm._s(_vm.label) + "\n    ")
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4c352762", module.exports)
   }
 }
 

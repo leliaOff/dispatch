@@ -30,3 +30,12 @@ Route::get('/template/{id}',        'TemplateController@get');
 Route::get('/template/delete/{id}', 'TemplateController@delete');
 Route::post('/template/create',     'TemplateController@create');
 Route::post('/template/update/{id}','TemplateController@update');
+
+/**
+ * Channels
+ */
+Route::get('/channels',             'ChannelController@index');
+Route::get('/channel/{id}',         'ChannelController@get');
+Route::get('/channel/delete/{id}',  'ChannelController@delete');
+Route::post('/channel/create',      'ChannelController@create');
+Route::post('/channel/update/{id}', 'ChannelController@update');

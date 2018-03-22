@@ -16,8 +16,11 @@ Vue.use(VueRouter);
 import MainMenu from './components/MainMenu';
 Vue.component('main-menu', MainMenu);
 
-import ConfirmModals from './components/ConfirmModals';
+import ConfirmModals from './components/Controls/ConfirmModals';
 Vue.component('confirm-modals', ConfirmModals);
+
+import Checkbox from './components/Controls/Checkbox';
+Vue.component('easy-checkbox', Checkbox);
 
 const app = new Vue({
     el      : '#app',

@@ -111,6 +111,73 @@ textarea {
 .align-right {
     text-align: right;
 }
+.input-title {
+    margin: 0;
+    line-height: 2.2;
+}
+
+.easy-checkbox {
+
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+    padding: 0 20px 20px 0;
+    width: 50%;
+
+    .easy-checkbox-icon {
+        
+        display: inline-block;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        border: 1px solid $text-color;
+        text-align: center;
+        line-height: 2;
+        @include border-radius(5px);
+
+        &.radio {
+            // border: 2px solid $text-color;
+            @include border-radius(50%);
+        }
+
+    }
+
+    .easy-checkbox-label {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+        padding: 0 0 0 32px;
+        margin: 0 0 0 -24px;
+    }
+
+    input {
+        display: none !important;
+    }
+
+    span {
+        display: none;
+        line-height: 1.4;
+        font-size: 14px;
+    }
+
+    &.checked {
+
+        span {
+            display: block;
+        }
+    }
+
+    &.disabled {        
+        cursor: default;
+        opacity: 0.2;
+    }
+
+    &:hover {
+        .easy-checkbox-icon {
+            background: $laraver-light;
+        }
+    }
+}
 
 #welcome {
     width: 900px;
