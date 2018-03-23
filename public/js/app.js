@@ -35343,14 +35343,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
-    components: {
-        //singleTemplate: SingleTemplate,
-    },
-
     data: function data() {
         return {
             template: {},
@@ -35373,10 +35371,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /* Список необходимых типов контактных данных */
         contactsTypesList: function contactsTypesList() {
             var list = {};
-            for (var i = 0; i < this.channels.length; i++) {
-                var key = this.channels[i];
-                var contactsType = this.channelsList[key].contacts_type;
-                list[contactsType.name] = contactsType;
+            for (var name in this.channels) {
+                list[this.channels[name]] = this.channelsList[name].contacts_type;
             }
             return list;
         },
@@ -35427,14 +35423,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         /* Изменили список каналов */
         channelChange: function channelChange(name, state) {
+
+            var channels = this.channels;
+
             if (state === true) {
-                if (!this.channels.includes(name)) {
-                    this.channels.push(name);
+                if (channels[name] == undefined) {
+                    channels[name] = this.channelsList[name].contacts_type.name;
                 }
             } else {
-                var i = this.channels.indexOf(name);
-                this.channels.splice(i, 1);
+                delete channels[name];
             }
+
+            this.channels = Object.assign({}, channels);
         },
 
 
@@ -35449,6 +35449,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             this.resultText = text;
+        },
+
+
+        /* Сформировать и отправить запросы */
+        send: function send() {
+
+            var data = {
+                template: this.template.alias,
+                channels: this.channels,
+                contacts: this.contacts,
+                data: this.templatesData
+            };
+
+            axios.post(window.baseurl + 'sends/create', data).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     },
 
@@ -35724,7 +35742,20 @@ var render = function() {
                     ])
                   ]
                 )
-              })
+              }),
+              _vm._v(" "),
+              _vm.template.alias != undefined
+                ? _c("div", { staticClass: "col-sm-12 clearfix" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-success",
+                        on: { click: _vm.send }
+                      },
+                      [_vm._v("Отправить")]
+                    )
+                  ])
+                : _vm._e()
             ],
             2
           )

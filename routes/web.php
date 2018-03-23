@@ -45,9 +45,11 @@ Route::group(['middleware' => ['auth']], function () {
     /**
      * Send
     */
-    //http://dispatch/public/send/register/sms/+79608554569/{"username":"Alisa","sitename": "BidDick.RU"}
     Route::get('/sends',                'SendController@index');
     Route::get('/send/{id}',            'SendController@get');
+    Route::post('/sends/create',        'SendController@create');
+    
+    //http://dispatch/public/send/register/sms/+79608554569/{"username":"Alisa","sitename": "YANDEX.RU"}
     Route::get('/send/{type}/{channel}/{contact}/{data}',
                                         'SendController@send');
     

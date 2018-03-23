@@ -66,7 +66,10 @@
                     </div>
                 </div>
 
-                
+                <!-- Кнопка -->
+                <div class="col-sm-12 clearfix" v-if="template.alias != undefined">
+                    <button class="btn btn-success" @click="send">Отправить</button>    
+                </div>
 
             </div>
 
@@ -77,10 +80,6 @@
 <script>
 
     export default {
-
-        components: {
-            //singleTemplate: SingleTemplate,
-        },
        
         data() {            
             return {
@@ -103,10 +102,8 @@
             /* Список необходимых типов контактных данных */
             contactsTypesList() {
                 let list = {};
-                for(let i = 0; i < this.channels.length; i++) {
-                    let key = this.channels[i];
-                    let contactsType = this.channelsList[key].contacts_type;
-                    list[contactsType.name] = contactsType;
+                for(let name in this.channels) {
+                    list[this.channels[name]] = this.channelsList[name].contacts_type;
                 }
                 return list;
             },
@@ -156,14 +153,18 @@
 
             /* Изменили список каналов */
             channelChange(name, state) {
+
+                let channels = this.channels;
+
                 if(state === true) {
-                    if(!this.channels.includes(name)) {
-                        this.channels.push(name);
+                    if(channels[name] == undefined) {
+                        channels[name] = this.channelsList[name].contacts_type.name;
                     }
                 } else {
-                    let i = this.channels.indexOf(name);
-                    this.channels.splice(i, 1);
+                    delete channels[name];
                 }
+
+                this.channels = Object.assign({}, channels);
             },
 
             /* Какой текст получится */
@@ -178,6 +179,24 @@
                 this.resultText = text;
 
             },
+
+            /* Сформировать и отправить запросы */
+            send() {
+
+                let data = {
+                    template    : this.template.alias,
+                    channels    : this.channels,
+                    contacts    : this.contacts,
+                    data        : this.templatesData
+                };
+
+                axios.post(window.baseurl + 'sends/create', data).then(response => {     
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+
+            }
 
         },
 

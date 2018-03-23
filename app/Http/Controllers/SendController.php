@@ -3,28 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\SendService;
+use App\Services\ParserService;
 use Illuminate\Validation\Rule;
 use App\Http\Repositories\SendsRepository;
-use App\Http\Repositories\ChannelsRepository;
-use App\Http\Repositories\TemplatesRepository;
-
 
 class SendController extends Controller
 {
     
-    private $sendsRepository;
-    private $channelsRepository;
-    private $templatesRepository;    
+    private $sendsRepository;  
+    private $sendService;  
     
     /**
      * Create a new controller instance.
      *
      */
-    public function __construct(SendsRepository $sendsRepository, ChannelsRepository $channelsRepository, TemplatesRepository $templatesRepository)
+    public function __construct(SendsRepository $sendsRepository, SendService $sendService)
     {
-        $this->sendsRepository      = $sendsRepository;
-        $this->channelsRepository   = $channelsRepository;
-        $this->templatesRepository  = $templatesRepository;
+        $this->sendsRepository = $sendsRepository;
+        $this->sendService     = $sendService;
     }
 
     /**
@@ -45,45 +42,57 @@ class SendController extends Controller
     }
 
     /**
-     * Send: { type: $TEMPLATESALIAS, channel: $CHANNELNAME, contact: $CONTACT, data: $DATA }
+     * Multiple Sending
+     */
+    public function create(Request $request)
+    {
+
+        $this->validate($request, [
+            'template'      => 'required|string',
+            'channels'      => 'required|array',
+            'channels.*'    => 'required|string',
+            'contacts'      => 'required|array',
+            'data'          => 'required|array',
+        ]);
+
+        $template   = $request['template'];
+        $channels   = $request['channels'];
+        $contacts   = $request['contacts'];
+        $data       = $request['data'];
+
+        /* Разбираем контактные данные */
+        $contactsData = [];
+        $parser = new ParserService();
+        foreach($contacts as $type => $value) {
+            $contactsData[$type] = $parser->getContactsDataAsArray($value);
+        }
+
+        /* Данные, заполненные пользователь, должны быть в json */
+        $dataJson = json_encode($data);
+
+        /* Делаем отправку по каждому каналу и для всех контактов */
+        $result = [];
+        foreach($channels as $channel => $contactsType) {
+
+            /* Список контактных данных под ключам типа контактных данных */
+            $contactsDataByType = $contactsData[$contactsType];
+
+            /* Отправляем всем, кто в списке */
+            foreach($contactsDataByType as $contact) {
+                $result[] = $this->send($template, $channel, $contact, $dataJson);
+            }
+            
+        }
+
+        return response($result, 200);
+    }
+
+    /**
+     * Send
      */
     public function send($type, $channel, $contact, $data)
     {
-        
-        /* Находим шаблон */
-        $template = $this->templatesRepository->findByAlias($type);
-        if(empty($template)) {
-            return response('template not found', 409);
-        }
-
-        /* Находим канал отправки */
-        $channel = $this->channelsRepository->findByName($channel);
-        if(empty($channel)) {
-            return response('channel not found', 409);
-        }
-
-        /* Разбираем данные */
-        $dataArray = json_decode($data, true);
-
-        /* Собираем сообщение */
-        $text = $template->text;
-        $pattern = '/\{([\w]*)\}/i';
-        $text = preg_replace_callback($pattern, function($matches) use ($dataArray) {
-            return $dataArray[$matches[1]];
-        }, $text);
-
-        /* Сохраняем в отправках и присваиваем статус "отправлено" */
-        $send = [
-            'template_id'   => $template->id,
-            'channel_id'    => $channel->id,
-            'contact'       => $contact,
-            'data'          => $data,
-            'text'          => $text
-        ];
-        $this->sendsRepository->create($send);
-
-        return $text;
-
+        return $this->sendService->send($type, $channel, $contact, $data);
     }
 
 }
