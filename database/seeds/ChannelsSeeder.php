@@ -18,7 +18,9 @@ class ChannelsSeeder extends Seeder
             ['name' => 'telegram',  'title' => 'Telegram',  'contacts_type_id' => 1],
         ];
 
+        \DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Channel::truncate();
+        \DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         foreach($channels as $channel) {
             Channel::create($channel);

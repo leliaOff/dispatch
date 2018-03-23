@@ -59,15 +59,17 @@ class HomeController extends Controller
 
         $this->validate($request, [
             'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:6|confirmed'
+            'password'  => 'required|string|min:6|confirmed',
+            'name'      => 'required|string|min:6|max:255',
         ]);
 
         $data = [
-            'name'      => $request['email'],
+            'name'      => $request['name'],
             'email'     => $request['email'],
             'password'  => bcrypt($request['password']),
         ];
-        $this->usersRepository->create($request);
+
+        $this->usersRepository->create($data);
         return response('success', 200);
      }
 

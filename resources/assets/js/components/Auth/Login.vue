@@ -13,14 +13,14 @@
                     <div class="alert alert-danger" v-if="status == 'incorrect'">Неверный пароль или пользователь не найден</div>
                     
                     <!-- Форма входа -->
-                    <div class="form-group">
+                    <div class="form-group" v-if="this.status != 'success'">
                         <input type="email" class="form-control" placeholder="email" v-model="email">
                         <input type="password" class="form-control" placeholder="пароль" v-model="password">
                     </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" @click="login">Войти</button>
+                    <button class="btn btn-success" @click="login" v-if="this.status != 'success'">Войти</button>
                     <button class="btn btn-default" @click="cansel">Закрыть</button>
                 </div>
             </div>
