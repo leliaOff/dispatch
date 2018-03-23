@@ -21,4 +21,17 @@ class ParserService
         preg_match_all("/([\w\@\+\.]+)/i", $string, $matches);
         return $matches[1];
     }
+
+    /**
+     * Gererate message text
+     */
+    public function getMessageText($template, $data)
+    {
+        $pattern = '/\{([\w]*)\}/i';
+        $text = preg_replace_callback($pattern, function($matches) use ($data) {
+            return $data[$matches[1]];
+        }, $template);
+
+        return $text;
+    }
 }

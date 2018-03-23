@@ -35346,11 +35346,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
+
             template: {},
             channels: [],
             contacts: {},
@@ -35360,7 +35363,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             channelsList: {}, //Список каналов передачи данных
 
             /* Текст результата, после подставления занчений */
-            resultText: ''
+            resultText: '',
+
+            /* Результат отправки */
+            sendResult: ''
 
         };
     },
@@ -35454,6 +35460,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         /* Сформировать и отправить запросы */
         send: function send() {
+            var _this4 = this;
 
             var data = {
                 template: this.template.alias,
@@ -35463,10 +35470,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
 
             axios.post(window.baseurl + 'sends/create', data).then(function (response) {
-                console.log(response.data);
+                _this4.sendResult = 'success';
+                _this4.clean();
             }).catch(function (error) {
-                console.log(error);
+                _this4.sendResult = 'fail';
             });
+        },
+
+
+        /* Очистить формы */
+        clean: function clean() {
+
+            this.template = {};
+            this.channels = [];
+            this.contacts = {};
+            this.resultText = '';
+
+            /* Загружаем данные српавочников */
+            this.getTemplates();
+            this.getChannels();
         }
     },
 
@@ -35503,6 +35525,18 @@ var render = function() {
             ],
             1
           )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.sendResult == "success"
+        ? _c("div", { staticClass: "alert alert-success" }, [
+            _vm._v("Все сообщения успешно отправлены")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.sendResult == "fail"
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _vm._v("Произошел сбой при отправке сообщений")
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.templatesList.length > 0

@@ -49,24 +49,4 @@ class SendsRepository extends BaseRepository
         return $item;
     }
 
-    // /**
-    //  * Update channel
-    //  */
-    // public function update($id, $data)
-    // {
-    //     $item = $this->find($id);    
-    //     $item->fill($data);        
-    //     $item->save();
-
-    //     return $item;
-    // }
-
-    // /**
-    //  * Delete channel
-    //  */
-    // public function delete($id)
-    // {
-    //     $this->model->find($id)->delete();
-    // }
-
 }

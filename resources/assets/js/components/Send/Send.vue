@@ -5,6 +5,8 @@
 
             <!-- Сообщения для пользователя -->
             <div class="alert alert-warning" v-if="templatesList.length == 0">Для начала отправчки сообщений необходимо создать хотя бы один <router-link to="/">шаблон</router-link></div>
+            <div class="alert alert-success" v-if="sendResult == 'success'">Все сообщения успешно отправлены</div>
+            <div class="alert alert-danger" v-if="sendResult == 'fail'">Произошел сбой при отправке сообщений</div>
 
             <!-- Поля для отправки -->
             <div class="row" v-if="templatesList.length > 0">
@@ -83,6 +85,7 @@
        
         data() {            
             return {
+
                 template            : {},
                 channels            : [],
                 contacts            : {},
@@ -92,7 +95,10 @@
                 channelsList        : {},   //Список каналов передачи данных
 
                 /* Текст результата, после подставления занчений */
-                resultText          : ''
+                resultText          : '',
+
+                /* Результат отправки */
+                sendResult          : ''
 
             }
         },
@@ -191,10 +197,25 @@
                 };
 
                 axios.post(window.baseurl + 'sends/create', data).then(response => {     
-                    console.log(response.data);
+                    this.sendResult = 'success';
+                    this.clean();
                 }).catch(error => {
-                    console.log(error);
+                    this.sendResult = 'fail';
                 });
+
+            },
+
+            /* Очистить формы */
+            clean() {
+                
+                this.template       = {};
+                this.channels       = [];
+                this.contacts       = {};
+                this.resultText = '';
+
+                /* Загружаем данные српавочников */
+                this.getTemplates();
+                this.getChannels();
 
             }
 

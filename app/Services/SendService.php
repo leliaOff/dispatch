@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Services\ParserService;
 use App\Http\Repositories\SendsRepository;
 use App\Http\Repositories\ChannelsRepository;
 use App\Http\Repositories\TemplatesRepository;
@@ -41,11 +42,7 @@ class SendService
         $dataArray = json_decode($data, true);
 
         /* Собираем сообщение */
-        $text = $template->text;
-        $pattern = '/\{([\w]*)\}/i';
-        $text = preg_replace_callback($pattern, function($matches) use ($dataArray) {
-            return $dataArray[$matches[1]];
-        }, $text);
+        $text = (new ParserService())->getMessageText($template->text, $dataArray);
 
         /* Сохраняем в отправках и присваиваем статус "отправлено" */
         $send = [

@@ -7,8 +7,9 @@ use App\Services\SendService;
 use App\Services\ParserService;
 use Illuminate\Validation\Rule;
 use App\Http\Repositories\SendsRepository;
+use App\Http\Interfaces\SendControllerInterface;
 
-class SendController extends Controller
+class SendController extends Controller implements SendControllerInterface
 {
     
     private $sendsRepository;  

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Repositories\ChannelsRepository;
+use App\Http\Interfaces\ChannelControllerInterface;
 
-
-class ChannelController extends Controller
+class ChannelController extends Controller implements ChannelControllerInterface
 {
     
     private $channelsRepository;

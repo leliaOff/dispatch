@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repositories\TemplatesRepository;
+use App\Http\Interfaces\TemplateControllerInterface;
 
 
-class TemplateController extends Controller
+class TemplateController extends Controller implements TemplateControllerInterface
 {
     
     private $templatesRepository;

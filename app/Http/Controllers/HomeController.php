@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repositories\UsersRepository;
+use App\Http\Interfaces\HomeControllerInterface;
 
-class HomeController extends Controller
+class HomeController extends Controller implements HomeControllerInterface
 {
     
     private $usersRepository;
     
     /**
-     * Create a new controller instance.
+     * Create a new controller instance
      *
      * @return void
      */
@@ -22,7 +23,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the application dashboard
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +33,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Login.
+     * Login
      *
      * @return void
      */
@@ -50,7 +51,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Registration.
+     * Registration
      *
      * @return void
      */
@@ -74,9 +75,10 @@ class HomeController extends Controller
      }
 
     /**
-     * @brief Метод для выхода
+     * Exit
      */
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
     }
 }
