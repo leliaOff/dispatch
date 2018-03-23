@@ -13,9 +13,9 @@ class ChannelsSeeder extends Seeder
     public function run()
     {
         $channels = [
-            ['name' => 'sms',       'title' => 'SMS'],
-            ['name' => 'email',     'title' => 'Email'],
-            ['name' => 'telegram',  'title' => 'Telegram'],
+            ['name' => 'sms',       'title' => 'SMS',       'contacts_type_id' => 1],
+            ['name' => 'email',     'title' => 'Email',     'contacts_type_id' => 2],
+            ['name' => 'telegram',  'title' => 'Telegram',  'contacts_type_id' => 1],
         ];
 
         Channel::truncate();

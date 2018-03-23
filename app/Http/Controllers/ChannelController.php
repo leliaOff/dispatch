@@ -27,7 +27,7 @@ class ChannelController extends Controller
      */
     public function index()
     {
-        return $this->channelsRepository->all()->get();
+        return $this->channelsRepository->all()->get()->keyBy('name');
     }
 
     /**

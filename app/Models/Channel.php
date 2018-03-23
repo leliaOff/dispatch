@@ -9,5 +9,12 @@ class Channel extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'title', 'contacts_type_id'];
+
+    /* Тип контактных данных, который необходим при отправке сообщения этим каналом */
+    public function contactsType()
+    {
+        return $this->belongsTo('App\Models\ContactsType');
+    }
+    
 }

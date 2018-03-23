@@ -17,7 +17,7 @@ class ChannelsRepository extends BaseRepository
      */
     public function all() 
     {
-        return $this->model;
+        return $this->model->with('contactsType');
     }
 
     /**
