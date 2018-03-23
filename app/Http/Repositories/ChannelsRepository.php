@@ -29,6 +29,14 @@ class ChannelsRepository extends BaseRepository
     }
 
     /**
+     * Get channel by NAME
+     */
+    public function findByName($name)
+    {
+        return $this->model->where('name', $name)->first();
+    }
+
+    /**
      * Create new channel
      */
     public function create($data) 

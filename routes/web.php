@@ -41,5 +41,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/channel/delete/{id}',  'ChannelController@delete');
     Route::post('/channel/create',      'ChannelController@create');
     Route::post('/channel/update/{id}', 'ChannelController@update');
+
+    /**
+     * Send
+    */
+    //http://dispatch/public/send/register/sms/+79608554569/{"username":"Alisa","sitename": "BidDick.RU"}
+    Route::get('/sends',                'SendController@index');
+    Route::get('/send/{id}',            'SendController@get');
+    Route::get('/send/{type}/{channel}/{contact}/{data}',
+                                        'SendController@send');
     
 });

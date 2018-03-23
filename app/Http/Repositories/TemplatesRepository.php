@@ -30,6 +30,14 @@ class TemplatesRepository extends BaseRepository
     }
 
     /**
+     * Get template by ALIAS
+     */
+    public function findByAlias($alias)
+    {
+        return $this->model->where('user_id', Auth::id())->where('alias', $alias)->first();
+    }
+
+    /**
      * Create new template
      */
     public function create($data) 
