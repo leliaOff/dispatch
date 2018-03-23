@@ -14,7 +14,7 @@ class ContactsType extends Model
     /* Каналы, в котором используется этот тип */
     public function channels()
     {
-        return $this->belongsTo('App\Models\Channel');
+        return $this->hasMany('App\Models\Channel');
     }
 
 }
