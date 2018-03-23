@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Http\Repositories;
-
 use App\Models\SendsStatus;
 
 class SendsStatusesRepository extends BaseRepository 
 {
     
-    public function __construct(SendsStatus $model) 
+    public function __construct() 
     {
-        $this->model = $model;
+        $this->model = new SendsStatus();
     }
 
     private function insert($data)

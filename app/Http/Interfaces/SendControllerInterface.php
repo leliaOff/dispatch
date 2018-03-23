@@ -27,4 +27,9 @@ interface SendControllerInterface
      */
     public function send($type, $channel, $contact, $data);
 
+    /**
+     * Send status
+     */
+    public function status($id);
+
 }

@@ -52,5 +52,8 @@ Route::group(['middleware' => ['auth']], function () {
     //http://dispatch/public/send/register/sms/+79608554569/{"username":"Alisa","sitename": "YANDEX.RU"}
     Route::get('/send/{type}/{channel}/{contact}/{data}',
                                         'SendController@send');
+
+    //http://dispatch/public/status/66
+    Route::get('/status/{id}',          'SendController@status');
     
 });

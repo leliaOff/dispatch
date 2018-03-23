@@ -96,4 +96,13 @@ class SendController extends Controller implements SendControllerInterface
         return $this->sendService->send($type, $channel, $contact, $data);
     }
 
+    /**
+     * Get status
+     */
+    public function status($id)
+    {
+        $send = $this->get($id);
+        return $this->sendService->status($id, $send->channel->name);
+    }
+
 }

@@ -18,7 +18,7 @@ class SendsRepository extends BaseRepository
     }
 
     /**
-     * Get all channels
+     * Get all sends
      */
     public function all() 
     {
@@ -26,7 +26,7 @@ class SendsRepository extends BaseRepository
     }
 
     /**
-     * Get channel by ID
+     * Get send by ID
      */
     public function find($id)
     {
@@ -34,7 +34,7 @@ class SendsRepository extends BaseRepository
     }
 
     /**
-     * Create new channel
+     * Create new send
      */
     public function create($data) 
     {

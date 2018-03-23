@@ -6,6 +6,8 @@ use App\Services\ParserService;
 use App\Http\Repositories\SendsRepository;
 use App\Http\Repositories\ChannelsRepository;
 use App\Http\Repositories\TemplatesRepository;
+use App\Http\Repositories\SendsStatusesRepository;
+use App\Services\Dispatch\StrategyDispatchService;
 
 class SendService
 {
@@ -44,17 +46,47 @@ class SendService
         /* Собираем сообщение */
         $text = (new ParserService())->getMessageText($template->text, $dataArray);
 
-        /* Сохраняем в отправках и присваиваем статус "отправлено" */
-        $send = [
+        /* Сохраняем в отправках и присваиваем статус "создано" */
+        $sendData = [
             'template_id'   => $template->id,
             'channel_id'    => $channel->id,
             'contact'       => $contact,
             'data'          => $data,
             'text'          => $text
         ];
-        $this->sendsRepository->create($send);
+        $send = $this->sendsRepository->create($sendData);
 
-        return response('success', 200);
+        /* Пытаемся отправить сообщение через диспетчер */
+        $dispatcher = new StrategyDispatchService($channel['name']);
+        if(!$dispatcher) {
+            return response('dispatcher not found', 409);
+        }
+        
+        $result = $dispatcher->send($contact, $text);
+        if($result == 'success') {
+            (new SendsStatusesRepository())->send($send->id);
+        } else {
+            (new SendsStatusesRepository())->sendFail($send->id);
+        }
+
+        return response($result, 200);
+
+    }
+
+    /**
+     * Получить статус отправки
+     */
+    public function status($id, $channel)
+    {
+        /* Получаем статус через диспетчера */
+        $dispatcher = new StrategyDispatchService($channel);
+        if(!$dispatcher) {
+            return response('dispatcher not found', 409);
+        }
+
+        $result = $dispatcher->getStatus($id);
+
+        return response($result, 200);
 
     }
 
