@@ -17,6 +17,8 @@ class CreateChannelsTable extends Migration
             $table->increments('id');
             $table->string('title', 255)->nullable();
             $table->string('name', 16);
+            $table->unsignedInteger('contacts_type_id');
+            $table->foreign('contacts_type_id')->references('id')->on('contacts_types');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -7,7 +7,6 @@ class StatusesService
     
     const STATUSES = [
         [ 'id' => 1, 'alias' => 'created',          'title' => 'Создано' ],
-        [ 'id' => 1, 'alias' => 'created',          'title' => 'Создано' ],
         [ 'id' => 2, 'alias' => 'send',             'title' => 'Отправлено' ],
         [ 'id' => 3, 'alias' => 'received',         'title' => 'Доставлено' ],
         [ 'id' => 4, 'alias' => 'read',             'title' => 'Прочитано' ],

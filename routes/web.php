@@ -53,10 +53,57 @@ Route::group(['middleware' => ['auth']], function () {
 /**
  * API
  */
+
+ /**
+  * Login
+  * Request: email, password
+  * Return: token
+  */
 Route::post('/api/login',               'HomeController@loginAPI');
+
+/**
+  * Logout
+  * Request: token
+  */
 Route::post('/api/logout',              'HomeController@logoutAPI');
+
+/**
+  * Token
+  * Request: token
+  * Return: fail/success
+  */
 Route::post('/api/token',               'HomeController@tokenAPI');
+
+/**
+  * Send
+  * Request: token, type, contact, channel, data(json)
+  * Return: send_id
+  */
 Route::post('/api/send',                'SendController@sendAPI');
+
+/**
+  * Resend
+  * Request: token, send_id
+  * Return: send_id
+  */
 Route::post('/api/resend',              'SendController@resendAPI');
+
+/**
+  * Status
+  * Request: token, send_id
+  * Return: {
+  *   "id": status_id, "send_id": send_id, "created_at": datetime, "updated_at": datetime, 
+  *   "status_id": status_type_id, "status": { "id": status_type_id, "alias": status_type_alias, "title": status_type_title }
+  * }
+  */
 Route::post('/api/status',              'SendsStatusController@findAPI');
+
+/**
+  * Statuses
+  * Request: token, send_id
+  * Return: [{
+  *   "id": status_id, "send_id": send_id, "created_at": datetime, "updated_at": datetime, 
+  *   "status_id": status_type_id, "status": { "id": status_type_id, "alias": status_type_alias, "title": status_type_title }
+  * }]
+  */
 Route::post('/api/statuses',            'SendsStatusController@allAPI');

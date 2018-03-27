@@ -95,6 +95,13 @@ class SendService
      */
     public function resend($sendId, $userId = false)
     {
+        
+        /* Находим сообщение */
+        $send = $this->sendsRepository->find($sendId, $userId);
+        if(empty($send)) {
+            return false;
+        }
+        
         /* Находим канал отправки */
         $channelName = $this->getSendsChannelName($sendId, $userId);
         if(!$channelName) {
