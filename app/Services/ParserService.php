@@ -29,7 +29,7 @@ class ParserService
     {
         $pattern = '/\{([\w]*)\}/i';
         $text = preg_replace_callback($pattern, function($matches) use ($data) {
-            return $data[$matches[1]];
+            return isset($data[$matches[1]]) ? $data[$matches[1]] : '';
         }, $template);
 
         return $text;

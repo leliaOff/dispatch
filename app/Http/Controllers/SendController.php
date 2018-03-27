@@ -7,22 +7,25 @@ use App\Services\SendService;
 use App\Services\ParserService;
 use Illuminate\Validation\Rule;
 use App\Http\Repositories\SendsRepository;
+use App\Http\Repositories\UsersAuthRepository;
 use App\Http\Interfaces\SendControllerInterface;
 
 class SendController extends Controller implements SendControllerInterface
 {
     
     private $sendsRepository;  
-    private $sendService;  
+    private $sendService;
+    private $usersAuthRepository;
     
     /**
      * Create a new controller instance.
      *
      */
-    public function __construct(SendsRepository $sendsRepository, SendService $sendService)
+    public function __construct(SendsRepository $sendsRepository, SendService $sendService, UsersAuthRepository $usersAuthRepository)
     {
-        $this->sendsRepository = $sendsRepository;
-        $this->sendService     = $sendService;
+        $this->sendsRepository      = $sendsRepository;
+        $this->sendService          = $sendService;
+        $this->usersAuthRepository  = $usersAuthRepository;
     }
 
     /**
@@ -68,9 +71,6 @@ class SendController extends Controller implements SendControllerInterface
             $contactsData[$type] = $parser->getContactsDataAsArray($value);
         }
 
-        /* Данные, заполненные пользователь, должны быть в json */
-        $dataJson = json_encode($data);
-
         /* Делаем отправку по каждому каналу и для всех контактов */
         $result = [];
         foreach($channels as $channel => $contactsType) {
@@ -80,7 +80,7 @@ class SendController extends Controller implements SendControllerInterface
 
             /* Отправляем всем, кто в списке */
             foreach($contactsDataByType as $contact) {
-                $result[] = $this->send($template, $channel, $contact, $dataJson);
+                $result[] = $this->sendService->send($template, $channel, $contact, $data);
             }
             
         }
@@ -89,20 +89,46 @@ class SendController extends Controller implements SendControllerInterface
     }
 
     /**
-     * Send
+     * API send
      */
-    public function send($type, $channel, $contact, $data)
+    public function sendAPI(Request $request)
     {
-        return $this->sendService->send($type, $channel, $contact, $data);
+        
+        $token = $request['token'];
+        $auth = $this->usersAuthRepository->validate($token);
+        
+        if($auth != false) {
+            
+            $type       = $request['type'];
+            $channel    = $request['channel'];
+            $contact    = $request['contact'];
+            $data       = json_decode($request['data'], true);
+
+            $result = $this->sendService->send($type, $channel, $contact, $data, $auth['user_id']);
+            return response($result, 200);
+
+        }
+        return response('the token is not valid', 403);
     }
 
     /**
-     * Get status
+     * API resendAPI
      */
-    public function status($id)
+    public function resendAPI(Request $request)
     {
-        $send = $this->get($id);
-        return $this->sendService->status($id, $send->channel->name);
+        
+        $token = $request['token'];
+        $auth = $this->usersAuthRepository->validate($token);
+        
+        if($auth != false) {
+            
+            $sendId = (int)$request['send_id'];
+
+            $result = $this->sendService->resend($sendId, $auth['user_id']);
+            return response($result, 200);
+
+        }
+        return response('the token is not valid', 403);
     }
 
 }

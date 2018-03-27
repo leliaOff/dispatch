@@ -32,9 +32,10 @@ class TemplatesRepository extends BaseRepository
     /**
      * Get template by ALIAS
      */
-    public function findByAlias($alias)
+    public function findByAlias($alias, $userId = false)
     {
-        return $this->model->where('user_id', Auth::id())->where('alias', $alias)->first();
+        if(!$userId) $userId = Auth::id();
+        return $this->model->where('user_id', $userId)->where('alias', $alias)->first();
     }
 
     /**

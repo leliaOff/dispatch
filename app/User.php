@@ -34,4 +34,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Template');
     }
+
+    /**
+     * User'auth token
+     */
+    public function auth()
+    {
+        return $this->hasOne('App\Models\UsersAuth');
+    }
 }

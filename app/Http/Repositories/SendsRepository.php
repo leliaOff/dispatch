@@ -28,17 +28,18 @@ class SendsRepository extends BaseRepository
     /**
      * Get send by ID
      */
-    public function find($id)
+    public function find($id, $userId = false)
     {
-        return $this->model->where('user_id', Auth::id())->with('template')->with('channel')->with('statuses')->find($id);
+        if(!$userId) $userId = Auth::id();
+        return $this->model->where('user_id', $userId)->with('template')->with('channel')->with('statuses')->find($id);
     }
 
     /**
      * Create new send
      */
-    public function create($data) 
+    public function create($data, $userId = false) 
     {
-        $data['user_id'] = Auth::id();
+        $data['user_id'] = $userId ? $userId : Auth::id();
        
         $model = $this->model();
         $item = (new $model())->create($data);

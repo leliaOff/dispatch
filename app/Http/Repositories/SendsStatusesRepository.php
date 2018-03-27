@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Repositories;
+
 use App\Models\SendsStatus;
 
 class SendsStatusesRepository extends BaseRepository 
@@ -26,7 +27,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'created'
+            'status_id' => 1
         ];
 
         return $this->insert($data);
@@ -39,7 +40,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'send'
+            'status_id' => 2
         ];
 
         return $this->insert($data);
@@ -52,7 +53,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'received'
+            'status_id' => 3
         ];
 
         return $this->insert($data);
@@ -65,7 +66,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'read'
+            'status_id' => 4
         ];
 
         return $this->insert($data);
@@ -78,7 +79,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'send_failed'
+            'status_id' => 5
         ];
 
         return $this->insert($data);
@@ -91,7 +92,7 @@ class SendsStatusesRepository extends BaseRepository
     {
         $data = [
             'send_id'   => $send_id,
-            'status'    => 'receive_failed'
+            'status_id' => 6
         ];
 
         return $this->insert($data);

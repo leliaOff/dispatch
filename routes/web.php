@@ -15,7 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();
 Route::post('/login',               'HomeController@login');
 Route::post('/registration',        'HomeController@registration');
 Route::post('/logout',              'HomeController@logout')->middleware('auth');
@@ -49,11 +48,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/send/{id}',            'SendController@get');
     Route::post('/sends/create',        'SendController@create');
     
-    //http://dispatch/public/send/register/sms/+79608554569/{"username":"Alisa","sitename": "YANDEX.RU"}
-    Route::get('/send/{type}/{channel}/{contact}/{data}',
-                                        'SendController@send');
-
-    //http://dispatch/public/status/66
-    Route::get('/status/{id}',          'SendController@status');
-    
 });
+
+/**
+ * API
+ */
+Route::post('/api/login',               'HomeController@loginAPI');
+Route::post('/api/logout',              'HomeController@logoutAPI');
+Route::post('/api/token',               'HomeController@tokenAPI');
+Route::post('/api/send',                'SendController@sendAPI');
+Route::post('/api/resend',              'SendController@resendAPI');
+Route::post('/api/status',              'SendsStatusController@findAPI');
+Route::post('/api/statuses',            'SendsStatusController@allAPI');

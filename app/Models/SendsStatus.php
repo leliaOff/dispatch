@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SendsStatus extends Model
 {
-    protected $fillable = ['send_id', 'status'];
+    protected $fillable = ['send_id', 'status_id'];
 
     /* Данный отправки */
     public function send()

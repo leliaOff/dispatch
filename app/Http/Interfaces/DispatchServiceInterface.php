@@ -20,4 +20,9 @@ interface DispatchServiceInterface
      */
     public function getStatus($id);
 
+    /**
+     * Получить всю историю статусов сообщения
+     */
+    public function getStatusesList($id);
+
 }

@@ -23,13 +23,13 @@ interface SendControllerInterface
     public function create(Request $request);
 
     /**
-     * Send
+     * Send for API
      */
-    public function send($type, $channel, $contact, $data);
+    public function sendAPI(Request $request);
 
     /**
-     * Send status
+     * Resend for API
      */
-    public function status($id);
+    public function resendAPI(Request $request);
 
 }

@@ -57,10 +57,23 @@ class EmailDispatchService implements DispatchServiceInterface
                 break;
         }
 
+        //Отдаем последний статус
         $result = SendsStatus::where('send_id', $id)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->first();
-        $status = $result->status;
+        return $result;
+    }
 
-        return $status;
+    /**
+     * Получить всю историю статусов сообщения
+     */
+    public function getStatusesList($id)
+    {
+        //Делаем запрос последнего статуса
+        $this->getStatus($id);
+
+        //Отдаем все статусы
+        $result = SendsStatus::where('send_id', $id)->orderBy('created_at', 'desc')->orderBy('id', 'desc')->get()->toArray();
+        return $result;
+
     }
 
 }

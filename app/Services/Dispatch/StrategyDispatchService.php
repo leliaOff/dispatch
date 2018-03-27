@@ -53,4 +53,12 @@ class StrategyDispatchService implements DispatchServiceInterface
         return $this->dispatcher->getStatus($id);
     }
 
+    /**
+     * Получить всю историю статусов сообщения
+     */
+    public function getStatusesList($id)
+    {
+        return $this->dispatcher->getStatusesList($id);
+    }
+
 }
